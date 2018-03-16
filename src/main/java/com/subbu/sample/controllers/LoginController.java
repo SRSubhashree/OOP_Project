@@ -6,17 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class LoginController {
-    public LoginController(){
-    }
-
-    @FXML
-    private URL location;
-    @FXML private ResourceBundle resources;
 
     @FXML
     private TextField userName;
@@ -36,7 +28,6 @@ public class LoginController {
                 loginLabel.setText("Biscuit!");
         }else
             loginLabel.setText("esesaav");
-
     }
 
     @FXML

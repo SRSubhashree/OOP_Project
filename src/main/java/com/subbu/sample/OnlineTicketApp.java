@@ -8,12 +8,11 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class OnlineTicketApp extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws IOException, SQLException {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Online Ticketing");
 
         Label connection = new Label("Connecting to Database");
