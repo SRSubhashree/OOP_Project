@@ -13,8 +13,10 @@ public class DBQueries {
 
         String query = "select * from user where user_name = '" + uid + "'";
         ResultSet resultSet = conn.createStatement().executeQuery(query);
-        if(resultSet.next())
-            return pwd.equals(resultSet.getString("user_pw"));
+        if(resultSet.next() && pwd.equals(resultSet.getString("user_pw"))) {
+            ConstantsConfig.setUserDetails(resultSet);
+            return true;
+        }
         return false;
     }
 
