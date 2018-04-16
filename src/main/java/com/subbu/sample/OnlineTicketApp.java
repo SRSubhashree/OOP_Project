@@ -11,8 +11,11 @@ import java.io.IOException;
 
 public class OnlineTicketApp extends Application {
 
+    public static Stage stage;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
         primaryStage.setTitle("Online Ticketing");
 
         Label connection = new Label("Connecting to Database");

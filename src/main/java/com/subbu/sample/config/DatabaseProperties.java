@@ -10,7 +10,7 @@ public class DatabaseProperties {
 
         String host = "jdbc:mysql://127.0.0.1:3306/live_ticket";
         String uName = "root";
-        String pass = "Bits@2014";
+        String pass = "root";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
