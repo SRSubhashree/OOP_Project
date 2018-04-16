@@ -38,10 +38,11 @@
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="10.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Business" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="410.0" layoutY="10.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="First" textAlignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <TextArea fx:id="totalPrice" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="book" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Book Tickets" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Button fx:id="book" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Book Tickets" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
             <Button fx:id="getDestinations" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#populateTo" text="Get Destinations" GridPane.columnIndex="1" GridPane.valignment="TOP" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#populateFlights" text="Search Flights" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <ChoiceBox fx:id="flightList" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calculate Fare" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>

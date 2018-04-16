@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class SearchTicketController {
     @FXML
@@ -46,6 +47,7 @@ public class SearchTicketController {
     public void initialize() throws SQLException {
         for (String source :DBQueries.getSource()) {
             from.getItems().add(source);
+            from.setValue(source);
         }
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd - MM - yyyy");
@@ -53,9 +55,10 @@ public class SearchTicketController {
         c.setTime(new Date());
         String dateValue = formatter.format(c.getTime());
         for (int i = 0; i < 5; i++) {
-            date.getItems().add(dateValue);
             c.add(Calendar.DAY_OF_MONTH,1);
             dateValue = formatter.format(c.getTime());
+            date.getItems().add(dateValue);
+            date.setValue(dateValue);
         }
     }
 
@@ -63,14 +66,18 @@ public class SearchTicketController {
     private void populateTo() throws SQLException {
         for (String dest :DBQueries.getDestinations(from.getValue())) {
             to.getItems().add(dest);
+            to.setValue(dest);
         }
     }
 
     @FXML
     private void populateFlights() throws SQLException {
+        flightDetails.getItems().removeAll(flightDetails.getItems());
+        flightDetails.getItems().add("Flight Num\t\tStart\t\tEnd\t\tFirst\t\tBusiness\t\tEconomy");
         for (FlightData data : DBQueries.getFlights(from.getValue(), to.getValue())) {
-            flightDetails.getItems().add(data.getNumber() + "\t" + data.getStart() + "\t" + data.getEnd());
+            flightDetails.getItems().add(data.getNumber() + "\t\t\t\t" + data.getStart() + "\t\t" + data.getEnd() + "\t" + data.getFirstFare()  + "\t\t" + data.getBusinessFare() + "\t\t\t" + data.getEconomyFare());
             flightList.getItems().add(data.getNumber());
+            flightList.setValue(data.getNumber());
         }
 
         for (int i = 1; i <= 5; i++) {
@@ -81,8 +88,16 @@ public class SearchTicketController {
         for (int i = 1; i <= 15; i++) {
             economySeats.getItems().add(i);
         }
+
+        firstSeats.setValue(1);
+        businessSeats.setValue(1);
+        economySeats.setValue(1);
     }
 
     @FXML
-    private void calculateFare(){}
+    private void calculateFare() throws SQLException {
+        List<Integer> fares = DBQueries.getFare(flightList.getValue());
+        String faretext =
+                "First Class Fare : ";
+    }
 }

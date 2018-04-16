@@ -56,11 +56,24 @@ public class DBQueries {
 
     public static List<FlightData> getFlights(String source, String dest) throws SQLException {
         Connection conn = DatabaseProperties.conn;
-        String query = "select number, start_time, end_time from flights where source = '" + source + "'";
+        String query = "select number, start_time, end_time, first_fare, business_fare, economy_fare from flights where source = '" + source + "' and destination = '" + dest + "'";
         ResultSet resultSet = conn.createStatement().executeQuery(query);
         List<FlightData> data = new ArrayList<>();
         while (resultSet.next()){
-            data.add(new FlightData(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3)));
+            data.add(new FlightData(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)));
+        }
+        return data;
+    }
+
+    public static List<Integer> getFare(Integer number) throws SQLException {
+        Connection conn = DatabaseProperties.conn;
+        String query = "select first_fare, business_fare, economy_fare from flights where number = " + number;
+        ResultSet resultSet = conn.createStatement().executeQuery(query);
+        List<Integer> data = new ArrayList<>();
+        if (resultSet.next()){
+            for (int i = 1; i <= 3; i++) {
+                data.add(resultSet.getInt(i));
+            }
         }
         return data;
     }
