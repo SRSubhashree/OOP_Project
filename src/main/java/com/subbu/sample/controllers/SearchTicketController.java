@@ -7,8 +7,8 @@ import com.subbu.sample.constants.FlightData;
 import com.subbu.sample.constants.UserProfile;
 import com.subbu.sample.helper.DBQueries;
 import com.subbu.sample.stages.Booking;
-import com.subbu.sample.stages.Tickets;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -48,6 +48,9 @@ public class SearchTicketController {
 
     @FXML
     private ChoiceBox<Integer> flightList;
+
+    @FXML
+    private Button book;
 
     @FXML
     public void initialize() throws SQLException {
@@ -115,8 +118,11 @@ public class SearchTicketController {
                         "Total Fare : " + totalFare;
         if (totalFare <= UserProfile.credits) {
             faretext = faretext + "\nProceed to Buy";
+            FareDetails.addedMoney = 0;
         } else {
             faretext = faretext + "\nPlease add " + (totalFare - UserProfile.credits) + " credits to continue transaction";
+            book.setText("ADD " + (totalFare - UserProfile.credits) + " and\nbook tickets");
+            FareDetails.addedMoney = totalFare - UserProfile.credits;
         }
         totalPrice.setText(faretext);
         FareDetails.firstFare = fares.get(0) * firstSeats.getValue();
@@ -126,7 +132,7 @@ public class SearchTicketController {
 
     @FXML
     private void buyTickets() throws SQLException, IOException {
-        int price = (FareDetails.firstFare + FareDetails.businessFare + FareDetails.economyFare);
+        int price = (FareDetails.firstFare + FareDetails.businessFare + FareDetails.economyFare - FareDetails.addedMoney);
         UserProfile.credits -= price;
         DBQueries.useCredits(price);
         String pnr = UUID.randomUUID().toString();

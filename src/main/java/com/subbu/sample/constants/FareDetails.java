@@ -4,4 +4,5 @@ public class FareDetails {
     public static int firstFare;
     public static int businessFare;
     public static int economyFare;
+    public static int addedMoney;
 }
