@@ -1,7 +1,9 @@
 package com.subbu.sample.helper;
 
 import com.subbu.sample.config.DatabaseProperties;
+import com.subbu.sample.constants.FareDetails;
 import com.subbu.sample.constants.FlightData;
+import com.subbu.sample.constants.UserProfile;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,7 +47,7 @@ public class DBQueries {
 
     public static List<String> getDestinations(String source) throws SQLException {
         Connection conn = DatabaseProperties.conn;
-        String query = "select destination from flights where source = '" + source + "'";
+        String query = "select distinct destination from flights where source = '" + source + "'";
         ResultSet resultSet = conn.createStatement().executeQuery(query);
         List<String> destinations = new ArrayList<>();
         while (resultSet.next()){
@@ -76,5 +78,25 @@ public class DBQueries {
             }
         }
         return data;
+    }
+
+    public static void useCredits(int price) throws SQLException {
+        Connection conn = DatabaseProperties.conn;
+        String query = "update user set credits = credits - " + price + " where id = " + UserProfile.id;
+        conn.createStatement().executeUpdate(query);
+    }
+
+    public static void addReservation(String uuid, int flightNum, int firstSeats, int businessSeats, int economySeats, String date) throws SQLException {
+        Connection conn = DatabaseProperties.conn;
+        String query = "insert into reservations (pnr, user_id, flight_num, first_seats, business_seats, economy_seats, fare, date) values ('" +
+                uuid + "', " +
+                UserProfile.id + ", " +
+                flightNum + ", " +
+                firstSeats + ", " +
+                businessSeats + ", " +
+                economySeats + ", " +
+                (FareDetails.firstFare + FareDetails.businessFare + FareDetails.economyFare) + ", '" +
+                date + "')";
+        conn.createStatement().executeUpdate(query);
     }
 }

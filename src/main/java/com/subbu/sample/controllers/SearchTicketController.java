@@ -1,18 +1,25 @@
 package com.subbu.sample.controllers;
 
+import com.subbu.sample.OnlineTicketApp;
+import com.subbu.sample.constants.BookedFlight;
+import com.subbu.sample.constants.FareDetails;
 import com.subbu.sample.constants.FlightData;
 import com.subbu.sample.constants.UserProfile;
 import com.subbu.sample.helper.DBQueries;
+import com.subbu.sample.stages.Booking;
+import com.subbu.sample.stages.Tickets;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class SearchTicketController {
     @FXML
@@ -112,5 +119,27 @@ public class SearchTicketController {
             faretext = faretext + "\nPlease add " + (totalFare - UserProfile.credits) + " credits to continue transaction";
         }
         totalPrice.setText(faretext);
+        FareDetails.firstFare = fares.get(0) * firstSeats.getValue();
+        FareDetails.businessFare = fares.get(1) * businessSeats.getValue();
+        FareDetails.economyFare = fares.get(2) * economySeats.getValue();
+    }
+
+    @FXML
+    private void buyTickets() throws SQLException, IOException {
+        int price = (FareDetails.firstFare + FareDetails.businessFare + FareDetails.economyFare);
+        UserProfile.credits -= price;
+        DBQueries.useCredits(price);
+        String pnr = UUID.randomUUID().toString();
+        DBQueries.addReservation(pnr, flightList.getValue(), firstSeats.getValue(), businessSeats.getValue(), economySeats.getValue(), date.getValue());
+
+        BookedFlight.uuid = pnr;
+        BookedFlight.flightNum = flightList.getValue();
+        BookedFlight.source = from.getValue();
+        BookedFlight.destination = to.getValue();
+        populateFlights();
+        totalPrice.clear();
+        Booking page = new Booking(OnlineTicketApp.stage);
+        page.setStageView();
+        OnlineTicketApp.stage.show();
     }
 }
