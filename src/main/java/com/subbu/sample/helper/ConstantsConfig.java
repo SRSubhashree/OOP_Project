@@ -18,5 +18,6 @@ public class ConstantsConfig {
         UserProfile.age = (time.getYear() - dob.getYear());
         UserProfile.phone = set.getString("phone");
         UserProfile.email = set.getString("email");
+        UserProfile.credits = set.getInt("credits");
     }
 }

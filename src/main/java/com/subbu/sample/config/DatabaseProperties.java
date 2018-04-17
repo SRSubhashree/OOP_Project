@@ -14,7 +14,7 @@ public class DatabaseProperties {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(host, uName, pass);
+            conn = DriverManager.getConnection(host, uName, null);
         } catch (Exception e) {
             System.out.println("oh no");
             e.printStackTrace();

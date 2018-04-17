@@ -7,4 +7,5 @@ public class UserProfile {
     public static int age;
     public static String phone;
     public static String email;
+    public static int credits;
 }
