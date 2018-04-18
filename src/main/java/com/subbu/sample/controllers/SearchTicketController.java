@@ -109,6 +109,10 @@ public class SearchTicketController {
 
     @FXML
     private void calculateFare() throws SQLException {
+        if ((firstSeats.getValue() + businessSeats.getValue() + economySeats.getValue()) == 0) {
+            totalPrice.setText("Please select a few seats");
+            return;
+        }
         List<Integer> fares = DBQueries.getFare(flightList.getValue());
         int totalFare = (fares.get(0) * firstSeats.getValue() + fares.get(1) * businessSeats.getValue() + fares.get(2) * economySeats.getValue());
         String faretext =
@@ -132,6 +136,10 @@ public class SearchTicketController {
 
     @FXML
     private void buyTickets() throws SQLException, IOException {
+        if ((firstSeats.getValue() + businessSeats.getValue() + economySeats.getValue()) == 0) {
+            totalPrice.setText("Please select a few seats");
+            return;
+        }
         int price = (FareDetails.firstFare + FareDetails.businessFare + FareDetails.economyFare - FareDetails.addedMoney);
         UserProfile.credits -= price;
         DBQueries.useCredits(price);
